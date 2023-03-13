@@ -45,6 +45,8 @@ services:
       - MARIADB_PASSWORD=${DB_PASSWORD}
     volumes:
       - .docker/data:/var/lib/mysql
+      - .docker/database/setup.sql:/docker-entrypoint-initdb.d/setup.sql #! mysqldump -u root -p growfast > /home/database/setup.sql
+      - .docker/database:/home/database
     ports:
       - "${PORT_DB_EXPOSE}:${PORT_DB_CONTAINER}"
     networks:
