@@ -1,0 +1,5 @@
+.docker/*
+**/.sessions/*
+**/.git/*
+**/node_modules/*
+**/vendor/*

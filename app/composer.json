@@ -1,0 +1,25 @@
+{
+	"name": "raflyfirdausy/atigrowfast",
+	"description": "ATI GrowFast - Backend",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Rafly Firdausy",
+			"email": "rafly.firdausy@gmail.com"
+		}
+	],
+	"require": {
+		"dompdf/dompdf": "^1.0",
+		"phpoffice/phpspreadsheet": "^1.20",
+		"mpdf/mpdf": "^8.1",
+		"guzzlehttp/guzzle": "^7.0",
+		"picqer/php-barcode-generator": "^2.2",
+		"nullpunkt/lz-string-php": "^1.3",
+		"vlucas/phpdotenv": "^5.5"
+	},
+	"config": {
+		"platform": {
+			"php": "8.0"
+		}
+	}
+}
