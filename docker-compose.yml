@@ -1,0 +1,56 @@
+version: '3.6'
+
+services:
+  #! ================================================================================================================
+  php_service:
+    container_name: ati-growfast-php
+    build:
+      context: ./
+      dockerfile: .docker/php/Dockerfile
+    volumes:
+      - ./.env:/home/ati-growfast/.env
+      - ./app/.env:/home/ati-growfast/.env
+      - ./app:/home/ati-growfast
+      - ./app/composer.json:/home/ati-growfast/composer.json
+    depends_on:
+      - database_service
+    networks:
+      - ati-growfast-network
+
+  #! ================================================================================================================
+  nginx_service:
+    image: nginx:1.23.3
+    container_name: ati-growfast-nginx
+    volumes:
+      - .docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - .docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./app:/home/ati-growfast
+    ports:
+      - ${PORT_NGINX_EXPOSE}:${PORT_NGINX_CONTAINER}
+    depends_on:
+      - php_service
+      - database_service
+    networks:
+      - ati-growfast-network
+
+  #! ================================================================================================================
+  database_service:
+    image: mariadb:10.11
+    container_name: ati-growfast-database
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_USER =${DB_USERNAME}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - .docker/data:/var/lib/mysql
+    ports:
+      - "${PORT_DB_EXPOSE}:${PORT_DB_CONTAINER}"
+    networks:
+      - ati-growfast-network
+
+#! ================================================================================================================
+networks:
+  ati-growfast-network:
+    driver: bridge
