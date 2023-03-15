@@ -1,9 +1,50 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-if(!function_exists("env")){
-    function env($key = ""){
+if (!function_exists("env")) {
+    function env($key = "")
+    {
         return isset($_ENV[$key]) ? $_ENV[$key] : NULL;
+    }
+}
+
+if (!function_exists("uuid")) {
+    function uuid()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff)
+        );
+    }
+}
+
+if (!function_exists("validationError")) {
+    function validationError($error, $oneLine = TRUE)
+    {
+        $separator = "<br>";
+        if ($oneLine) {
+            $separator = ", ";
+        }
+        $message = implode($separator, array_map(
+            function ($v, $k) {
+                if (is_array($v)) {
+                    return $k . '[]=' . implode('&' . $k . '[]=', $v);
+                } else {
+                    // return $k . ' : ' . $v;
+                    return $v;
+                }
+            },
+            $error,
+            array_keys($error)
+        ));
+        return $message;
     }
 }
 

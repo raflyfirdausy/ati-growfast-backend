@@ -1,13 +1,16 @@
 <?php
 
-define("SESSION",               "TOUR_SESSION");
-define("LOKASI_LOGO",           "assets/img/ayunda_white.png");
-define("LOKASI_ICON_KATEGORI",  "assets/img/icon_kategori/");
-define("LOKASI_GALERY",         "assets/img/galery/");
-define("LOKASI_GAMBAR",         "assets/img/gambar/");
-define("LOKASI_BUKTI",          "assets/img/bukti/");
+define("SESSION",               "GROWFASTSESSION");
+define("LOKASI_PROFILE",        "assets/img/profile/");
 
-define("STATUS_BELUM",          "BELUM");
-define("STATUS_SUDAH",          "SUDAH");
-define("STATUS_BATAL",          "BATAL");
-define("STATUS_TOLAK",          "TOLAK");
+
+if (!function_exists("getApiKey")) {
+    function getApiKey()
+    {
+        $CI = &get_instance();
+        $api_key_variable = $CI->config->item('rest_key_name');
+        $key_name   = 'HTTP_' . strtoupper(str_replace('-', '_', $api_key_variable));
+        $apiKey     = $CI->input->server($key_name);
+        return $apiKey;
+    }
+}

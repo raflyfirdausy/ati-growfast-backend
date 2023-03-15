@@ -114,8 +114,9 @@ class Custom_model extends MY_Model
     /** @var bool | array
      * Enables created_at and updated_at fields
      */
-    protected $timestamps = TRUE;
-    protected $timestamps_format = 'Y-m-d H:i:s';
+    protected $timestamps           = TRUE;
+    protected $uuid                 = FALSE;
+    protected $timestamps_format    = 'Y-m-d H:i:s';
 
     protected $_created_at_field;
     protected $_updated_at_field;
@@ -356,10 +357,22 @@ class Custom_model extends MY_Model
             if ($this->timestamps !== FALSE) {
                 $data[$this->_created_at_field] = $this->_the_timestamp();
             }
+
+            //! ADD BY RAFLY : 15 Maret 2023
+            if ($this->uuid === TRUE) {
+                $data[$this->primary_key] = $this->_the_uuidv();
+            }
+
             $data = $this->trigger('before_create', $data);
             if ($this->_database->insert($this->table, $data)) {
                 $this->_prep_after_write();
                 $id = $this->_database->insert_id();
+
+                //! ADD BY RAFLY : 15 Maret 2023
+                if ($this->uuid === TRUE) {
+                    $id = $data[$this->primary_key];
+                }
+
                 $return = $this->trigger('after_create', $id);
                 return $return;
             }
@@ -372,9 +385,19 @@ class Custom_model extends MY_Model
                 if ($this->timestamps !== FALSE) {
                     $row[$this->_created_at_field] = $this->_the_timestamp();
                 }
+
+                //! ADD BY RAFLY : 15 Maret 2023
+                if ($this->uuid === TRUE) {
+                    $row[$this->primary_key] = $this->_the_uuidv();
+                }
+
                 $row = $this->trigger('before_create', $row);
                 if ($this->_database->insert($this->table, $row)) {
-                    $return[] = $this->_database->insert_id();
+                    if ($this->uuid === TRUE) {
+                        $return[] = $row[$this->primary_key];
+                    } else {
+                        $return[] = $this->_database->insert_id();
+                    }
                 }
             }
             $this->_prep_after_write();
@@ -1783,5 +1806,20 @@ class Custom_model extends MY_Model
     {
         $data['updated_by'] = !empty($_SESSION[SESSION]["m_admin"]) ? $_SESSION[SESSION]["m_admin"]["id"] : null;
         return $data;
+    }
+
+    function _the_uuidv()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff)
+        );
     }
 }

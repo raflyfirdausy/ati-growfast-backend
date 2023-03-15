@@ -155,8 +155,8 @@ $config['allow_auth_and_keys'] = TRUE;
 | e.g: md5('admin:REST API:1234') = '1e957ebc35631ab22d5bd6526bd14ea2'
 |
 */
-$config['auth_library_class'] = '';
-$config['auth_library_function'] = '';
+$config['auth_library_class']     = '';
+$config['auth_library_function']  = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -207,7 +207,7 @@ $config['auth_library_function'] = '';
 $config["auth_override_class_method_http"] = [
   "auth"      => [
     "index"   => [
-      "post"  => "none",
+      "post"  => "basic",
     ]
   ],
   "home"    => [
@@ -393,7 +393,7 @@ $config['rest_key_length'] = 40;
 | 2012/06/12. See RFC 6648 specification for more details
 |
 */
-$config['rest_key_name'] = 'X-GROWFAST-API-KEY';
+$config['rest_key_name'] =  env("REST_KEY_NAME");
 
 /*
 |--------------------------------------------------------------------------

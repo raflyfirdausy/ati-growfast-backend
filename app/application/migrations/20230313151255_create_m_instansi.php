@@ -9,7 +9,11 @@ class Migration_Create_m_instansi extends CI_Migration
 	public function up()
 	{
 		$fields = [
-			"uuid VARCHAR(36) DEFAULT UUID()",
+			"uuid"        		=> [
+				"type"    			=> "VARCHAR",
+				"constraint"        => 36,
+				"null"              => FALSE,
+			],
 			"nama"        			=> [
 				"type"    			=> "VARCHAR",
 				"constraint"        => 255,
@@ -70,13 +74,14 @@ class Migration_Create_m_instansi extends CI_Migration
 			"deleted_at DATETIME NULL DEFAULT NULL"
 		];
 		$this->dbforge->add_field($fields);                         //? ADD FIELDS        
-		$this->dbforge->add_key("id", TRUE);                 		//? ADD PRIMARY KEY
-		$attributes = array('ENGINE' => 'InnoDB');
+		$this->dbforge->add_key("uuid", TRUE);                 		//? ADD PRIMARY KEY
+		$attributes = ['ENGINE' => 'InnoDB'];
 		$this->dbforge->create_table($this->tableName, TRUE, $attributes);
 
 
 		$dataSeeder		= [
 			[
+				"uuid"					=> "980b2002-e57d-43d4-99eb-e91fd04df766",
 				"nama"    				=> "RS Uji coba GrowFast",
 				"no_telp"    			=> "085726096515",
 				"direktur"        		=> "Rafly Firdausy",
