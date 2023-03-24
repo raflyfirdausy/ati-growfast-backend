@@ -12,7 +12,12 @@ class APP_Controller extends MY_Controller
         //TODO : INI DISINI LEBIH BAIK DI KASIH VALIDASI SUDAH LOGIN APA BELUM GITU GITU
         if (!$this->session->has_userdata(SESSION)) {
             redirect(base_url("auth"));
-        }
+        }       
+
+        $params  = [
+            "role"  => $this->session->userdata(SESSION)["role"]
+        ];
+        $this->load->library("Menu", $params);
     }
 
     protected function loadViewBack($view = NULL, $local_data = array(), $asData = FALSE)

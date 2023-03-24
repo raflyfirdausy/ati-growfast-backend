@@ -17,7 +17,7 @@
 <body>
     <div class="main-wrapper">
         <div class="preloader">
-            <img src="<?= asset("img/ayunda_white.png") ?>" style="position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;width:250px;" alt="homepage" class="dark-logo" />
+            <img src="<?= asset("img/ati_white.png") ?>" style="position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;width:250px;" alt="homepage" class="dark-logo" />
         </div>
         <div class="row auth-wrapper gx-0">
             <div class="col-lg-4 col-xl-3 bg-info auth-box-2 on-sidebar">
@@ -25,14 +25,13 @@
                     <div class="row justify-content-center text-center">
                         <div class="col-md-7 col-lg-12 col-xl-9">
                             <div>
-                                <img src="<?= asset("img/ayunda_white.png") ?>" style="width:100px;height:100px;" alt="homepage" class="dark-logo" />
+                                <img src="<?= asset("img/ati_white.png") ?>" style="width:100px;" alt="homepage" class="dark-logo" />
                                 <h2 class="text-white mt-4 fw-light">
-                                    <span class="font-weight-medium"><?= $_ENV["APP_SIMPLE_NAME"] ?></span>
+                                    <span class="font-weight-medium"><?= $_ENV["APP_NAME"] ?></span>
                                 </h2>
                             </div>
                             <h2 class="op-5 text-white fs-4 mt-4">
-                                <span class="font-weight-medium">Ayunda Tour Official</span>
-                                Biro dan Jasa Serve with Heart and Smile
+                                <span class="font-weight-medium"><?= env("APP_AUTHOR_NAME") ?></span>
                             </h2>
                         </div>
                     </div>

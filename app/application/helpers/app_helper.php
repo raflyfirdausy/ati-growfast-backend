@@ -14,3 +14,32 @@ if (!function_exists("getApiKey")) {
         return $apiKey;
     }
 }
+
+
+if (!function_exists("getUser")) {
+    function getUser($kondisi, $removePassword = TRUE)
+    {
+        $CI         = &get_instance();
+        $load       = $CI->load->model(["User_model" => "user"]);
+        $_user      = $CI->user
+            ->where($kondisi)
+            ->with_instansi("fields:nama,no_telp,direktur")
+            ->with_prov("fields:nama")
+            ->with_kab("fields:nama")
+            ->with_kec("fields:nama")
+            ->with_kel("fields:nama")
+            ->get();
+
+        if (!$_user) {
+            return FALSE;
+        }
+
+        if ($removePassword) {
+            if (isset($_user["password"])) {
+                unset($_user["password"]);
+            }
+        }
+
+        return $_user;
+    }
+}

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= asset("img/ayunda_white.png") ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= asset("img/ati_white.png") ?>">
     <title><?= !empty($title) ? ($title . " | " . $_ENV["APP_SIMPLE_NAME"]) : $_ENV["APP_NAME"] ?></title>
     <link href="<?= template_nice_admin() ?>assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
     <link href="<?= template_nice_admin() ?>assets/extra-libs/c3/c3.min.css" rel="stylesheet">
@@ -50,11 +50,11 @@
                     <div class="navbar-brand">
                         <a href="<?= base_url() ?>" class="logo">
                             <b class="logo-icon">
-                                <img src="<?= asset("img/ayunda_white.png") ?>" style="width:35px;height:35px;" alt="homepage" class="dark-logo" />
-                                <img src="<?= asset("img/ayunda_white.png") ?>" style="width:35px;height:35px;" alt="homepage" class="light-logo" />
+                                <img src="<?= asset("img/ati_white.png") ?>" style="width:30px;height:40px;" alt="homepage" class="dark-logo" />
+                                <img src="<?= asset("img/ati_white.png") ?>" style="width:30px;height:40px;" alt="homepage" class="light-logo" />
                             </b>
                             <span class="logo-text text-white">
-                                <?= $_ENV["APP_SIMPLE_NAME"] ?>
+                                <?= $_ENV["APP_NAME"] ?>
                             </span>
                         </a>
                         <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)" data-sidebartype="mini-sidebar">
@@ -69,9 +69,7 @@
                     <ul class="navbar-nav float-left mr-auto">
                         <li class="nav-item">
                             <div class="ml-2 d-none d-sm-block">
-                                <a href="<?= base_url() ?>" target="_blank">
-                                    <button type="button" class="btn waves-effect waves-light btn-dark">Lihat Website</button>
-                                </a>
+
                             </div>
                         </li>
                     </ul>
@@ -86,7 +84,7 @@
                                 </span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                                     <div class="">
-                                        <img src="<?= asset("img/ayunda_white.png") ?>" alt="user" class="rounded-circle" width="60">
+                                        <img src="<?= asset("img/ati_orange.png") ?>" alt="user" class="rounded-circle" width="25" height="35">
                                     </div>
                                     <div class="m-l-10">
                                         <h4 class="m-b-0"><?= $_session["nama"] ?></h4>
