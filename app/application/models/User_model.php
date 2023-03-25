@@ -3,7 +3,7 @@
 class User_model extends Custom_model
 {
     public $table                   = 'm_user';
-    public $primary_key             = 'uuid';
+    public $primary_key             = 'id';
     public $uuid                    = TRUE;
     public $soft_deletes            = TRUE;
     public $timestamps              = TRUE;
@@ -44,8 +44,8 @@ class User_model extends Custom_model
         $this->has_one['instansi'] = array(
             'foreign_model'     => 'Instansi_model',
             'foreign_table'     => 'm_instansi',
-            'foreign_key'       => 'uuid',
-            'local_key'         => 'uuid_instansi'
+            'foreign_key'       => 'id',
+            'local_key'         => 'id_instansi'
         );
     }
 }

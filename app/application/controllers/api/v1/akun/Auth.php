@@ -162,7 +162,7 @@ class Auth extends REST_Controller
             "rt"                => $rt,
             "rw"                => $rw
         ];
-        $update         = $this->user->where(["uuid" => $_user["uuid"]])->update($dataUpdate);
+        $update         = $this->user->where([$this->user->primary_key => $_user[$this->user->primary_key]])->update($dataUpdate);
         if (!$update) {
             return $this->response([
                 "status"        => true,
@@ -176,7 +176,7 @@ class Auth extends REST_Controller
             "status"        => true,
             "code"          => REST_Controller::HTTP_OK,
             "message"       => "Data profile berhasil di ubah",
-            "data"          => getUser(["uuid" => getApiKey()])
+            "data"          => getUser([$this->user->primary_key => getApiKey()])
         ], REST_Controller::HTTP_OK);
     }
 
@@ -221,7 +221,7 @@ class Auth extends REST_Controller
         $dataUpload             = $this->upload->data();
         $data[$formNameFile]    = $dataUpload["file_name"];
 
-        $update                 = $this->user->where(["uuid" => $_user["uuid"]])->update($data);
+        $update                 = $this->user->where([$this->user->primary_key => $_user[$this->user->primary_key]])->update($data);
         if (!$update) {
             return $this->response([
                 "status"        => true,
@@ -247,7 +247,7 @@ class Auth extends REST_Controller
     public function foto_delete()
     {
         $_user                  = $this->getUser();
-        $update                 = $this->user->where(["uuid" => $_user["uuid"]])->update(["foto" => NULL]);
+        $update                 = $this->user->where([$this->user->primary_key => $_user[$this->user->primary_key]])->update(["foto" => NULL]);
         if (!$update) {
             return $this->response([
                 "status"        => true,
@@ -313,7 +313,7 @@ class Auth extends REST_Controller
             ], REST_Controller::HTTP_OK);
         }
 
-        $update             = $this->user->where(["uuid" => $_user["uuid"]])->update(["password" => $passwordBaru]);
+        $update             = $this->user->where([$this->user->primary_key => $_user[$this->user->primary_key]])->update(["password" => $passwordBaru]);
         if (!$update) {
             return $this->response([
                 "status"        => true,
@@ -346,7 +346,7 @@ class Auth extends REST_Controller
 
     private function getUser($removePassword = FALSE)
     {
-        $_user = getUser(["uuid" => getApiKey()], $removePassword);
+        $_user = getUser([$this->user->primary_key => getApiKey()], $removePassword);
         if (!$_user) {
             return $this->response([
                 "status"        => true,

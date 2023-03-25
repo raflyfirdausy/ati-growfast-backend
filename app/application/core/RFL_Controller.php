@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class RFL_Controller extends Sampah_Controller
+class RFL_Controller extends APP_Controller
 {
     public $module;
     public $model;
@@ -35,7 +35,7 @@ class RFL_Controller extends Sampah_Controller
 
             "ENABLE_ADD_BUTTON" => $this->enableAddButton
         ];
-        
+
         $this->_session = $this->session->userdata(SESSION);
     }
 
@@ -51,8 +51,8 @@ class RFL_Controller extends Sampah_Controller
         $limit              = $this->input->post("length")  ?: 10;
         $offset             = $this->input->post("start")   ?: 0;
 
-        $data               = $this->_filterDataTable($this->modelView)->where($this->kondisiGetData)->order_by("id", "DESC")->as_array()->limit($limit, $offset)->get_all() ?: [];
-        $dataFilter         = $this->_filterDataTable($this->modelView)->where($this->kondisiGetData)->order_by("id", "DESC")->count_rows() ?: 0;
+        $data               = $this->_filterDataTable($this->modelView)->where($this->kondisiGetData)->order_by("created_at", "DESC")->as_array()->limit($limit, $offset)->get_all() ?: [];
+        $dataFilter         = $this->_filterDataTable($this->modelView)->where($this->kondisiGetData)->order_by("created_at", "DESC")->count_rows() ?: 0;
         $dataCountAll       = $this->modelView->where($this->kondisiGetData)->count_rows() ?: 0;
 
         echo json_encode([

@@ -1,7 +1,9 @@
 <?php
 
-define("SESSION",               "GROWFASTSESSION");
-define("LOKASI_PROFILE",        "assets/img/profile/");
+define("SESSION",                       "GROWFASTSESSION");
+define("LOKASI_PROFILE",                "assets/img/profile/");
+define("LOKASI_ALAT_BARANG_GAMBAR",     "assets/img/alat_barang/gambar/");
+define("LOKASI_ALAT_BARANG_PDF",        "assets/img/alat_barang/pdf/");
 
 
 if (!function_exists("getApiKey")) {
@@ -41,5 +43,20 @@ if (!function_exists("getUser")) {
         }
 
         return $_user;
+    }
+}
+
+if (!function_exists("generateKodeAlatBarang")) {
+    function generateKodeAlatBarang()
+    {
+        $CI         = &get_instance();
+        $load       = $CI->load->model(["AlatBarang_model" => "alatBarang"]);
+
+        $kode       = generator(5);
+        $cekKode    = $CI->alatBarang->where(["kode" => $kode])->get();
+        if ($cekKode) {
+            return generateKodeAlatBarang();
+        }
+        return $kode;
     }
 }
