@@ -231,7 +231,10 @@ class Auth extends REST_Controller
         }
 
         if (!empty($_user["foto"]) && file_exists(LOKASI_PROFILE . $_user["foto"])) {
-            unlink(LOKASI_PROFILE . $_user["foto"]);
+            $foto = LOKASI_PROFILE . $_user["foto"];
+            if (file_exists($foto)) {
+                unlink($foto);
+            }
         }
 
         $_user          = $this->getUser();

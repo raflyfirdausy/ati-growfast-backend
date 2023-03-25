@@ -1,9 +1,24 @@
 <?php
 
 define("SESSION",                       "GROWFASTSESSION");
+define("LOKASI_LOGO",                   "assets/img/ati_orange.svg");
+define("GAMBAR_NOT_FOUND",              "assets/img/notfound.jpg");
 define("LOKASI_PROFILE",                "assets/img/profile/");
 define("LOKASI_ALAT_BARANG_GAMBAR",     "assets/img/alat_barang/gambar/");
 define("LOKASI_ALAT_BARANG_PDF",        "assets/img/alat_barang/pdf/");
+
+//!TODO : CHECK DIRECTORY IS EXIST OR NOT
+$listDirectoryCheck  = [
+    LOKASI_PROFILE,
+    LOKASI_ALAT_BARANG_PDF,
+    LOKASI_ALAT_BARANG_GAMBAR
+];
+
+foreach ($listDirectoryCheck as $list) {
+    if (!file_exists($list)) {
+        mkdir($list, 0777, TRUE);
+    }
+}
 
 
 if (!function_exists("getApiKey")) {

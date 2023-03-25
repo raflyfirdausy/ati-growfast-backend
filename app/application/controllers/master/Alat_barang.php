@@ -46,7 +46,7 @@ class Alat_barang extends RFL_Controller
             [
                 "col"               => 6,
                 "type"              => "file",
-                "accept"            => "applicatoin/pdf",
+                "accept"            => "application/pdf",
                 "name"              => "pdf_pemakaian",
                 "label"             => "Cara pemakaian (Pdf)",
                 "numberOnly"        => false,
@@ -118,11 +118,157 @@ class Alat_barang extends RFL_Controller
         ];
     }
 
-    public function index(){
+    public function index()
+    {
         $data = [
             "FIELD_FORM"    => $this->_getFieldForm(),
             "title"         => $this->module
         ];
-        $this->loadRFLView($this->RFL_data["RFL_MASTER"], $data);
+        $this->loadRFLView("master/alat_barang/data_alat_barang", $data);
+    }
+
+    public function create()
+    {
+        foreach ($this->fieldForm as $form) {
+            $ishideFromCreate   = isset($form["hideFromCreate"])    ? $form["hideFromCreate"]   : FALSE;
+            if ($form["type"] != "file" && !$ishideFromCreate) {
+                $data[$form["name"]] = $this->input->post($form["name"]);
+            }
+        }
+
+        $formNameFile                     = "gambar";
+        if (!empty($_FILES[$formNameFile]["name"])) {
+            $configUploadGambar = $this->configUpload;
+            $this->upload->initialize($configUploadGambar);
+            $upload     = $this->upload->do_upload($formNameFile);
+            if ($upload) {
+                $dataUpload             = $this->upload->data();
+                $data[$formNameFile]    = $dataUpload["file_name"];
+            } else {
+                echo json_encode([
+                    "code"      => 503,
+                    "message"   => "Terjadi kesalahan saat menambahkan data $this->module. Keterangan gambar : " . $this->upload->display_errors("", "")
+                ]);
+                die;
+            }
+        }
+
+        $formNameFile                   = "pdf_pemakaian";
+        if (!empty($_FILES[$formNameFile]["name"])) {
+            $configUploadPdf = $this->configUpload;
+            $configUploadPdf["allowed_types"]   = "pdf";
+            $configUploadPdf["upload_path"]     = LOKASI_ALAT_BARANG_PDF;
+            $this->upload->initialize($configUploadPdf);
+            $upload     = $this->upload->do_upload($formNameFile);
+            if ($upload) {
+                $dataUpload             = $this->upload->data();
+                $data[$formNameFile]    = $dataUpload["file_name"];
+            } else {
+                echo json_encode([
+                    "code"      => 503,
+                    "message"   => "Terjadi kesalahan saat menambahkan data $this->module. Keterangan pdf : " . $this->upload->display_errors("", "")
+                ]);
+                die;
+            }
+        }
+
+        $insert = $this->model->insert($data);
+        if (!$insert) {
+            echo json_encode([
+                "code"      => 503,
+                "message"   => "Terjadi kesalahan saat menambahkan data $this->module"
+            ]);
+            die;
+        }
+
+        echo json_encode([
+            "code"      => 200,
+            "message"   => "Berhasil menambahkan data " . ucwords($this->module)
+        ]);
+    }
+
+    public function update()
+    {
+        $id_data    = $this->input->post("id_data");
+        $cekData    = $this->model->where([$this->model->primary_key => $id_data])->get();
+        if (!$cekData) {
+            echo json_encode([
+                "code"      => 404,
+                "message"   => "Data $this->module tidak ditemukan"
+            ]);
+            die;
+        }
+
+        $dataUpdate = [];
+        foreach ($this->fieldForm as $form) {
+            $isHideFromUpdate   = isset($form["hideFromEdit"])    ? $form["hideFromEdit"]   : FALSE;
+            if ($form["type"] != "file" && !$isHideFromUpdate) {
+                $dataUpdate[$form["name"]] = $this->input->post($form["name"]);
+            }
+        }
+
+        $formNameFile                     = "gambar";
+        if (!empty($_FILES[$formNameFile]["name"])) {
+            $configUploadGambar = $this->configUpload;
+            $this->upload->initialize($configUploadGambar);
+            $upload     = $this->upload->do_upload($formNameFile);
+            if ($upload) {
+                $dataUpload                     = $this->upload->data();
+                $dataUpdate[$formNameFile]      = $dataUpload["file_name"];
+
+                if (!empty($cekData["gambar"]) && file_exists(LOKASI_ALAT_BARANG_GAMBAR . $cekData["gambar"])) {
+                    $file = LOKASI_ALAT_BARANG_GAMBAR . $cekData["gambar"];
+                    if (file_exists($file)) {
+                        unlink($file);
+                    }
+                }
+            } else {
+                echo json_encode([
+                    "code"      => 503,
+                    "message"   => "Terjadi kesalahan saat memperbaharui data $this->module. Keterangan gambar : " . $this->upload->display_errors("", "")
+                ]);
+                die;
+            }
+        }
+
+        $formNameFile                   = "pdf_pemakaian";
+        if (!empty($_FILES[$formNameFile]["name"])) {
+            $configUploadPdf = $this->configUpload;
+            $configUploadPdf["allowed_types"]   = "pdf";
+            $configUploadPdf["upload_path"]     = LOKASI_ALAT_BARANG_PDF;
+            $this->upload->initialize($configUploadPdf);
+            $upload     = $this->upload->do_upload($formNameFile);
+            if ($upload) {
+                $dataUpload                     = $this->upload->data();
+                $dataUpdate[$formNameFile]      = $dataUpload["file_name"];
+
+                if (!empty($cekData["pdf_pemakaian"]) && file_exists(LOKASI_ALAT_BARANG_PDF . $cekData["pdf_pemakaian"])) {
+                    $file = LOKASI_ALAT_BARANG_PDF . $cekData["pdf_pemakaian"];
+                    if (file_exists($file)) {
+                        unlink($file);
+                    }
+                }
+            } else {
+                echo json_encode([
+                    "code"      => 503,
+                    "message"   => "Terjadi kesalahan saat memperbaharui data $this->module. Keterangan pdf : " . $this->upload->display_errors("", "")
+                ]);
+                die;
+            }
+        }
+
+        $update = $this->model->where([$this->model->primary_key => $cekData[$this->model->primary_key]])->update($dataUpdate);
+        if (!$update) {
+            echo json_encode([
+                "code"      => 503,
+                "message"   => "Terjadi kesalahan saat mengedit " . ucwords($this->module)
+            ]);
+            die;
+        }
+
+        echo json_encode([
+            "code"      => 200,
+            "message"   =>  ucwords($this->module) . " berhasil di ubah !"
+        ]);
     }
 }
