@@ -173,8 +173,7 @@ const modalEditAction = (id, url, modalId, fieldForm) => {
                 success: function (result) {
                     Swal.close()
                     if (result.code == 200) {
-                        let data = result.data
-                        console.log(data)
+                        let data = result.data                        
                         fieldForm.forEach((currentValue, index, arr) => {
                             if (currentValue.type != "file" && currentValue.type != "password") {
                                 if (currentValue.type == "select") {

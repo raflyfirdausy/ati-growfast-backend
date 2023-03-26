@@ -465,7 +465,8 @@ class Custom_model extends MY_Model
             if (isset($column_name_where)) {
                 if (is_array($column_name_where)) {
                     $this->where($column_name_where);
-                } elseif (is_numeric($column_name_where)) {
+                // } elseif (is_numeric($column_name_where)) {
+                } elseif (is_numeric($column_name_where) || is_string($column_name_where)) {
                     $this->_database->where($this->primary_key, $column_name_where);
                 } else {
                     $column_value = (is_object($data)) ? $data->{$column_name_where} : $data[$column_name_where];

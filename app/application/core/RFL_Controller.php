@@ -37,7 +37,7 @@ class RFL_Controller extends APP_Controller
 
             "ENABLE_ADD_BUTTON" => $this->enableAddButton
         ];
-
+        
         $this->_session = $this->session->userdata(SESSION);
     }
 

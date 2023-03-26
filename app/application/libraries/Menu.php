@@ -99,7 +99,7 @@ class Menu
                             "title"     => "Admin",
                             "path"      => "/master/user/admin",
                             "icon"      => "mdi mdi-code-equal",
-                            "roles"     => ["*"],
+                            "roles"     => [],
                             "child"     => []
                         ],
                         [
