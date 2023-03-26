@@ -18,6 +18,8 @@ class RFL_Controller extends APP_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model(["Wilayah_model" => "wilayah"]);
+
         $directory              = $this->router->directory;
         $class                  = $this->router->class;
         $this->pathUrl          = $directory . $class;
@@ -184,6 +186,113 @@ class RFL_Controller extends APP_Controller
         echo json_encode([
             "code"      => 200,
             "message"   =>  ucwords($this->module) . " berhasil di ubah !"
+        ]);
+    }
+
+    public function findProvinsi()
+    {
+        header('Content-Type: application/json');
+        $kondisi["LENGTH(kode)"]                    = 2;                //? KODE PROVINSI itu pasti 5 digit        
+        $_wilayah       = $this->wilayah
+            ->fields(["kode as value", "nama label"])
+            ->where($kondisi)
+            ->order_by("nama", "ASC")
+            ->get_all();
+
+        if (!$_wilayah) {
+            echo json_encode([
+                "code"      => 404,
+                "message"   => "Data tidak ditemukan",
+                "data"      => []
+            ]);
+            die;
+        }
+
+        echo json_encode([
+            "code"      => 200,
+            "message"   => "Data ditemukan",
+            "data"      => $_wilayah
+        ]);
+    }
+
+    public function findKabupaten($kode_provinsi = "")
+    {
+        header('Content-Type: application/json');
+        $kondisi["LENGTH(kode)"]                    = 5;                //? KODE PROVINSI itu pasti 5 digit
+        $kondisi["SUBSTRING(kode, 1, 2) ="]         = $kode_provinsi;
+        $_wilayah       = $this->wilayah
+            ->fields(["kode as value", "nama label"])
+            ->where($kondisi)
+            ->order_by("nama", "ASC")
+            ->get_all();
+
+        if (!$_wilayah) {
+            echo json_encode([
+                "code"      => 404,
+                "message"   => "Pilih provinsi terlebih dahulu",
+                "data"      => []
+            ]);
+            die;
+        }
+
+        echo json_encode([
+            "code"      => 200,
+            "message"   => "Data ditemukan",
+            "data"      => $_wilayah
+        ]);
+    }
+
+    public function findKecamatan($kode_kabupaten = "")
+    {
+        header('Content-Type: application/json');
+        $kondisi["LENGTH(kode)"]                = 8;                //? KODE PROVINSI itu pasti 5 digit
+        $kondisi["SUBSTRING(kode, 1, 5) ="]     = $kode_kabupaten;
+        $_wilayah       = $this->wilayah
+            ->fields(["kode as value", "nama label"])
+            ->where($kondisi)
+            ->order_by("nama", "ASC")
+            ->get_all();
+
+        if (!$_wilayah) {
+            echo json_encode([
+                "code"      => 404,
+                "message"   => "Pilih kecamatan terlebih dahulu",
+                "data"      => []
+            ]);
+            die;
+        }
+
+        echo json_encode([
+            "code"      => 200,
+            "message"   => "Data ditemukan",
+            "data"      => $_wilayah
+        ]);
+    }
+
+    public function findKelurahan($kode_kecamatan = "")
+    {
+        header('Content-Type: application/json');
+        $kondisi["LENGTH(kode)"]                = 13;                //? KODE PROVINSI itu pasti 5 digit
+        $kondisi["SUBSTRING(kode, 1, 8) ="]     = $kode_kecamatan;
+        $_wilayah       = $this->wilayah
+            ->fields(["kode as value", "nama label"])
+            ->where($kondisi)
+            ->order_by("nama", "ASC")
+            ->get_all();
+
+        if (!$_wilayah) {
+            echo json_encode([
+                "code"      => 404,
+                "message"   => "Pilih kecamatan terlebih dahulu",
+                "data"      => []
+            ]);
+            die;
+        }
+
+        echo json_encode([
+            "code"      => 200,
+            "message"   => "Data ditemukan",
+            "data"      => $_wilayah
         ]);
     }
 }

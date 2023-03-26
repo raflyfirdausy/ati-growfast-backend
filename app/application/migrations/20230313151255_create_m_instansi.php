@@ -91,7 +91,7 @@ class Migration_Create_m_instansi extends CI_Migration
 				"kel"					=> "33.02.19.2006",
 				"alamat"				=> "Klahang",
 				"rt"					=> "005",
-				"rt"					=> "002",
+				"rw"					=> "002",
 				"keterangan"			=> "Testing Aja",
 			],
 		];

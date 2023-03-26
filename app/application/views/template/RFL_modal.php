@@ -16,7 +16,7 @@
 
                                 <?php
                                 $idForm             = $form["name"] . ($modal_edit ? "_edit" : "");
-                                $isRequired         = $form["required"]                 ? "required"                : "";                              
+                                $isRequired         = $form["required"]                 ? "required"                : "";
                                 $isRequired         = isset($form["required_edit"])     ? ($form["required_edit"]   ? "required" : "") : ($form["required"] ? "required" : "");
                                 $isHideFromTable    = isset($form["hideFromTable"])     ? $form["hideFromTable"]    : FALSE;
                                 $isHideFromEdit     = isset($form["hideFromEdit"])      ? $form["hideFromEdit"]     : FALSE;

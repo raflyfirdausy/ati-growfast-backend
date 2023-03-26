@@ -21,10 +21,7 @@ class Alat_barang extends RFL_Controller
         $configUpload['remove_space']     = TRUE;
         $configUpload['overwrite']        = TRUE;
         $configUpload['encrypt_name']     = TRUE;
-        $configUpload['upload_path']      = LOKASI_ALAT_BARANG_GAMBAR;
-        if (!file_exists($configUpload['upload_path'])) {
-            mkdir($configUpload['upload_path'], 0777, TRUE);
-        }
+        $configUpload['upload_path']      = LOKASI_ALAT_BARANG_GAMBAR;       
         $this->configUpload     = $configUpload;
     }
 
