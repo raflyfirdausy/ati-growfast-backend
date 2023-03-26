@@ -88,6 +88,7 @@
                                     </div>
                                     <div class="m-l-10">
                                         <h4 class="m-b-0"><?= $_session["nama"] ?></h4>
+                                        <h5 class="m-b-0"><?= $_session["role"] ?></h5>
                                     </div>
                                 </div>
                                 <div class="profile-dis scrollable">

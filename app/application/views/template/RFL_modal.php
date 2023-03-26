@@ -69,11 +69,11 @@
                                     <?php endif ?>
 
                                     <?php if ($modal_edit) : ?>
-                                        <?php if (isset($form["note_edit"]) && !empty($form["note_edit"])) : ?>
+                                        <?php if (isset($form["note_edit"]) && !empty($form["note_edit"]) && !$form["hideFromEdit"]) : ?>
                                             <small class="text-danger"><?= $form["note_edit"] ?></small>
                                         <?php endif ?>
                                     <?php else : ?>
-                                        <?php if (isset($form["note_create"]) && !empty($form["note_create"])) : ?>
+                                        <?php if (isset($form["note_create"]) && !empty($form["note_create"]) && !$form["hideFromCreate"]) : ?>
                                             <small class="text-info"><?= $form["note_create"] ?></small>
                                         <?php endif ?>
                                     <?php endif ?>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Petugas extends RFL_Controller
+class Instansi extends RFL_Controller
 {
     public function __construct()
     {
@@ -12,11 +12,11 @@ class Petugas extends RFL_Controller
         ]);
 
 
-        $this->module           = "User Petugas";
+        $this->module           = "User Instansi";
         $this->model            = $this->user;
         $this->modelView        = $this->vUser;
         $this->fieldForm        = $this->_getFieldForm();
-        $this->kondisiGetData   = ["role" => PETUGAS];
+        $this->kondisiGetData   = ["role" => INSTANSI];
     }
 
     private function _getFieldForm()
@@ -28,13 +28,16 @@ class Petugas extends RFL_Controller
             ->order_by("nama", "ASC")
             ->get_all();
 
+        $this->load->model(["Instansi_model" => "instansi"]);
+        $instansi = $this->instansi->fields(["id as value", "nama as label"])->get_all() ?: [];
+
         return [
             [
                 "col"               => 6,
                 "type"              => "hidden",
                 "name"              => "role",
                 "label"             => "",
-                "value"             => PETUGAS,
+                "value"             => INSTANSI,
                 "numberOnly"        => false,
                 "required"          => true,
                 "hideFromTable"     => false,
@@ -65,10 +68,27 @@ class Petugas extends RFL_Controller
             ],
             [
                 "col"               => 12,
+                "type"              => "select",
+                "name"              => "id_instansi",
+                "name_alias"        => "instansi_nama",
+                "label"             => "Nama Instansi",
+                "numberOnly"        => false,
+                "required"          => true,
+                "hideFromTable"     => false,
+                "hideFromEdit"      => false,
+                "hideFromCreate"    => false,
+                "options"       => [
+                    "chain"         => FALSE,               //! Set true if chaining
+                    "to"            => NULL,                //! Set name of target chaining
+                    "serverSide"    => FALSE,                //! Set true if server side
+                    "data"          => $instansi
+                ]
+            ],
+            [
+                "col"               => 12,
                 "type"              => "password",
                 "name"              => "password",
                 "label"             => "Password",
-                "note_edit"         => "Kosongi jika tidak ingin mengubah password",
                 "numberOnly"        => false,
                 "required"          => true,
                 "hideFromTable"     => true,
@@ -243,7 +263,7 @@ class Petugas extends RFL_Controller
             "title"         => $this->module,
             "URL_RESET"     => base_url("$this->pathUrl/reset/")
         ];
-        $this->loadRFLView("master/user/petugas", $data);
+        $this->loadRFLView("master/user/instansi", $data);
     }
 
     public function reset()
