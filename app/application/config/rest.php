@@ -340,7 +340,7 @@ $config['rest_keys_table'] = 'rest_keys';
 |   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
 */
-$config['rest_enable_keys'] = TRUE;
+$config['rest_enable_keys'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
