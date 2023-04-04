@@ -29,5 +29,5 @@ RUN echo 'pm.max_children = 50' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 9000
-CMD bash -c "composer self-update && composer install && php-fpm"
+CMD bash -c "chown -R www-data /home/back && composer self-update && composer install && php-fpm"
 # CMD ["php-fpm"]
