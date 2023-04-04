@@ -186,7 +186,7 @@ class Auth extends REST_Controller
         $configUpload   = [
             "upload_path"       => LOKASI_PROFILE,
             "allowed_types"     => "jpg|jpeg|png",
-            "max_size"          => 1024 * 5,    //? 5MB
+            "max_size"          => 1024 * 50,    //? 5MB
             "encrypt_name"      => TRUE,
             "remove_space"      => TRUE,
             "overwrite"         => TRUE,
