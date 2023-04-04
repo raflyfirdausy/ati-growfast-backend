@@ -74,6 +74,8 @@ class Auth extends REST_Controller
                 "data"         => NULL
             ], REST_Controller::HTTP_OK);
         }
+        
+        $_user["foto"]  = base_url(LOKASI_PROFILE) . (($_user["foto"] != null) ? $_user["foto"] : "default.jpg");
 
         return $this->response([
             "status"        => true,

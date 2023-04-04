@@ -51,6 +51,8 @@ if (!function_exists("getUser")) {
             return FALSE;
         }
 
+        $_user["foto"]  = base_url(LOKASI_PROFILE) . (($_user["foto"] != null) ? $_user["foto"] : "default.jpg");
+
         if ($removePassword) {
             if (isset($_user["password"])) {
                 unset($_user["password"]);
